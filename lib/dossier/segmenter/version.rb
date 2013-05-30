@@ -1,5 +1,5 @@
 module Dossier
-  module Segmenter
+  class Segmenter
     VERSION = "0.0.1"
   end
 end
