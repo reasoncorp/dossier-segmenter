@@ -9,7 +9,6 @@ module Dossier
         self.report     = segmenter.report
         self.segment    = segment
         self.definition = definition
-        @key_parts      = []
       end
 
       def each
@@ -17,6 +16,10 @@ module Dossier
       end
 
       delegate :length, :count, :empty?, to: :rows
+
+      def inspect
+        "#<#{self.class.name}:@rows.count=#{rows.count}>"
+      end
 
       private
 

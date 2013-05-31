@@ -120,6 +120,14 @@ describe Dossier::Segmenter do
     end
   end
 
+  describe "segment options" do
+    it 'works the way I want it to' do
+      segment = mock('Segment', key_path: 'feline.false')
+      options = segmenter.segment_options_for segment
+      expect(options.map { |hash| hash['group_id'] }).to eq [22, 23]
+    end
+  end
+
   describe "segment traversal" do
 
     describe "from the segmenter to the first segment" do
@@ -138,7 +146,7 @@ describe Dossier::Segmenter do
           let(:domestic) { family.domestics.first }
 
           it "has an array of groups" do
-            expect(domestic.groups.length).to eq 5
+            expect(domestic.groups.length).to eq 2
           end
 
           describe "to the rows" do
@@ -152,8 +160,7 @@ describe Dossier::Segmenter do
               let(:group) { domestic.groups.last }
 
               it "has rows" do
-                # require 'pry';binding.pry
-                expect(group.rows.length).to eq 2
+                expect(group.rows.length).to eq 4
               end
             end
           end

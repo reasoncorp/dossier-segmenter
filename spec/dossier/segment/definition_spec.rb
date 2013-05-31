@@ -73,8 +73,7 @@ describe Dossier::Segment::Definition do
     end
 
     it "sets up the segment subclasses name constant properly" do
-      d = Dossier::Segment::Definition.new(TestReport.segmenter_class, :foo)
-      expect(TestReport::Foo).to be_a Class
+      expect(CuteAnimalsReport::Family).to be_a Class
     end
   end
 end

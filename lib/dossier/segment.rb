@@ -6,7 +6,7 @@ module Dossier
       self.segmenter  = segmenter
       self.report     = segmenter.report
       self.definition = definition
-      self.options    = options
+      self.options    = options.symbolize_keys
       extend(definition.chain_module)
     end
 
@@ -23,22 +23,22 @@ module Dossier
     end
 
     def chain
-      parent_chain(self)
-      @chain
+      @chain ||= [].tap { |collector| parent_chain(self, collector) }
     end
 
     def key_path
       chain.map(&:group_by).reverse.join('.')
     end
 
+    def inspect
+      "#<#{self.class.name}:#{key_path}>"
+    end
+
     private
 
-    def parent_chain(segment)
-      @chain ||= []
-      if segment.parent
-        @chain << segment.parent
-        parent_chain(segment)
-      end
+    def parent_chain(segment, collector)
+      collector << segment
+      parent_chain(segment.parent, collector) if segment.parent
     end
 
   end

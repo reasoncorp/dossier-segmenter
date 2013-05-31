@@ -12,7 +12,7 @@ module Dossier
       end
 
       def segmented?
-        segmenter.segment_chain.any?
+        self.class.segmenter_class.segments.any?
       end
 
       module ClassMethods

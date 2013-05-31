@@ -21,11 +21,12 @@ module Dossier
     def self.skip_headers
       segments.map(&:columns).flatten
     end
+
     delegate :skip_headers, to: "self.class"
     
     def initialize(report)
       self.report = report
-      extend(segment_chain.first.segment_module)
+      extend(segment_chain.first.segment_module) if report.segmented?
     end
 
     def headers
@@ -47,9 +48,39 @@ module Dossier
     end
 
     def segment_options_for(segment)
-      data.keys.select { |k, v| k.match segment.key_path }.
-        map { |key| data[key].first }.
-        flatten.map { |row| Hash[report.results.headers.zip(row)] }
+      # data.keys.reduce({}) do |acc, key| 
+      #   acc.tap do |hash|
+      #     k = key.split('.').first(segment.key_path.split('.').length + 1)
+      #     hash[k] ||= data[key].first
+      #   end
+      # end.values
+
+      # segmenter.data.keys.map{|k| k.split('.')}.inject({}) {|a,k| a[k.first(1)] ||= segmenter.data[k.join('.')].first; a}
+
+      # segmenter.data.keys.map{|k| k.split('.')}.inject({}) {|a,k| a[k.first(3)] ||= segmenter.data[k.join('.')].first; a}.select { |k,v| k.first(2) == ['feline', 'false'] }.values
+
+      # segment_position = 3
+
+      position = segment.key_path.split('.').count
+      data.keys.map { |key| 
+        key.split('.') 
+      }.inject({}) { |acc, key| 
+        acc.tap { |hash| 
+          hash[key.first(position + 1)] ||= data[key.join('.')].first
+        }
+      }.select { |key, value| 
+        key.first(position) == segment.key_path.split('.')
+      }.values.map { |row|
+        Hash[report.results.headers.zip(row)]
+      }
+    end
+
+    def key_path
+      String.new
+    end
+
+    def inspect
+      "#<#{self.class.name}>"
     end
 
     private
