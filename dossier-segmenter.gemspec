@@ -21,10 +21,11 @@ Gem::Specification.new do |spec|
   # TODO: add version when cut
   spec.add_dependency "dossier"
 
-  spec.add_development_dependency "bundler",   "~> 1.3"
-  spec.add_development_dependency "rspec",     "~> 2.13"
-  spec.add_development_dependency "pry",       ">= 0.9.10"
-  spec.add_development_dependency "capybara",  "~> 2.1.0"
-  spec.add_development_dependency "simplecov", "~> 0.7.1"
+  spec.add_development_dependency "bundler",     "~> 1.3"
+  spec.add_development_dependency "rspec-rails", "~> 2.13"
+  spec.add_development_dependency "rails",       "~> 3.2.13"
+  spec.add_development_dependency "capybara",    "~> 2.1"
+  spec.add_development_dependency "simplecov",   "~> 0.7"
+  spec.add_development_dependency "pry",         ">= 0.9.10"
   spec.add_development_dependency "rake"
 end

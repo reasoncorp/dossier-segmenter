@@ -1,0 +1,50 @@
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-05-31 15:30:41 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (12.9ms)
+Completed 200 OK in 21ms (Views: 19.0ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-05-31 15:30:41 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (5.4ms)
+Completed 200 OK in 6ms (Views: 5.9ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-05-31 15:56:22 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (15.3ms)
+Completed 200 OK in 26ms (Views: 24.0ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-05-31 15:56:22 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (6.7ms)
+Completed 200 OK in 8ms (Views: 7.2ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-05-31 15:58:17 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (12.4ms)
+Completed 200 OK in 19ms (Views: 17.7ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-05-31 15:58:17 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (5.9ms)
+Completed 200 OK in 7ms (Views: 6.4ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-05-31 15:58:17 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (5.2ms)
+Completed 200 OK in 6ms (Views: 5.7ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-06-01 08:15:04 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (21.4ms)
+Completed 200 OK in 34ms (Views: 31.9ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-06-01 08:15:05 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (10.9ms)
+Completed 200 OK in 13ms (Views: 11.7ms)
+Started GET "/reports/cute_animals" for 127.0.0.1 at 2013-06-01 08:15:05 -0400
+Processing by Dossier::ReportsController#show as HTML
+  Parameters: {"report"=>"cute_animals"}
+  Rendered /Users/adamhunter/Studio/adamhunter/dossier-segmenter/app/views/dossier/reports/cute_animals.html.haml (9.5ms)
+Completed 200 OK in 11ms (Views: 10.2ms)

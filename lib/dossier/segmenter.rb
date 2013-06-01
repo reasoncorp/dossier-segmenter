@@ -1,4 +1,5 @@
 require 'dossier'
+require 'dossier/segmenter/engine'
 require 'dossier/segmenter/version'
 
 module Dossier
