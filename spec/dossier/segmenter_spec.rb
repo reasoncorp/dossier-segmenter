@@ -13,8 +13,8 @@ describe Dossier::Segmenter do
       end
     end
   }
-  let(:headers)   { CuteAnimalsReport::HEADERS }
-  let(:rows)      { CuteAnimalsReport::ROWS    }
+  let(:headers)   { CuteAnimalsReport::HEADERS.call }
+  let(:rows)      { CuteAnimalsReport::ROWS.call    }
   let(:results)   { mock('Results', headers: headers, rows: rows) }
   let(:report)    { report_class.new.tap { |r| r.stub(:results).and_return(results) } }
   let(:segmenter) { report.segmenter }
@@ -23,32 +23,32 @@ describe Dossier::Segmenter do
     let(:data) {
       {
         'canine.true.10' => [
-          ['canine', true,  10, 'foxes', 'fennec',      'tan',    9, true],
-          ['canine', true,  10, 'foxes', 'fire',        'orange', 0, false],
+          ['canine', true,  10, 'foxes', 'fennec',      'tan',    9, 896, true],
+          ['canine', true,  10, 'foxes', 'fire',        'orange', 0, 468, false],
         ],
         'canine.false.10' => [
-          ['canine', false, 10, 'foxes', 'arctic',      'white',  5, false],
-          ['canine', false, 10, 'foxes', 'crab-eating', 'brown',  3, false],
-          ['canine', false, 10, 'foxes', 'red',         'orange', 5, false],
+          ['canine', false, 10, 'foxes', 'arctic',      'white',  5, 108, false],
+          ['canine', false, 10, 'foxes', 'crab-eating', 'brown',  3, 328, false],
+          ['canine', false, 10, 'foxes', 'red',         'orange', 5, 963, false],
         ],
         'canine.true.15' => [
-          ['canine', true,  15, 'dog',   'shiba inu',   'tan',    7, true],
-          ['canine', true,  15, 'dog',   'labrador',    'varied', 5, true],
-          ['canine', true,  15, 'dog',   'beagle',      'mixed',  8, true],
-          ['canine', true,  15, 'dog',   'boxer',       'brown',  5, true],
+          ['canine', true,  15, 'dog',   'shiba inu',   'tan',    7, 191, true],
+          ['canine', true,  15, 'dog',   'labrador',    'varied', 5, 269, true],
+          ['canine', true,  15, 'dog',   'beagle',      'mixed',  8, 917, true],
+          ['canine', true,  15, 'dog',   'boxer',       'brown',  5, 14,  true],
         ],
         'feline.false.22' => [
-          ['feline', false, 22, 'tiger', 'bengal',      'orange', 4, false],
-          ['feline', false, 22, 'tiger', 'siberian',    'white',  5, false],
+          ['feline', false, 22, 'tiger', 'bengal',      'orange', 4, 184, false],
+          ['feline', false, 22, 'tiger', 'siberian',    'white',  5, 970, false],
         ],
         'feline.false.23' => [
-          ['feline', false, 23, 'lion',  'lion',        'tan',    5, false],
+          ['feline', false, 23, 'lion',  'lion',        'tan',    5, 128, false],
         ],
         'feline.true.25' => [
-          ['feline', true,  25, 'cat',   'short hair',  'varied', 6, true],
-          ['feline', true,  25, 'cat',   'abyssinian',  'tan',    7, true],
-          ['feline', true,  25, 'cat',   'persian',     'varied', 6, false],
-          ['feline', true,  25, 'cat',   'wirehair',    'grey',   7, true],
+          ['feline', true,  25, 'cat',   'short hair',  'varied', 6, 262, true],
+          ['feline', true,  25, 'cat',   'abyssinian',  'tan',    7, 125, true],
+          ['feline', true,  25, 'cat',   'persian',     'varied', 6, 625, false],
+          ['feline', true,  25, 'cat',   'wirehair',    'grey',   7, 758, true],
         ]
       }
     }

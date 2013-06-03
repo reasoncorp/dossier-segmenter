@@ -34,12 +34,21 @@ module Dossier
       "#<#{self.class.name}:#{key_path}>"
     end
 
+    def summarize(row)
+      summary << row
+    end
+
+    def summary
+      @summary ||= Summary.new(headers)
+    end
+
+    delegate :headers, to: :segmenter
+
     private
 
     def parent_chain(segment, collector)
       collector << segment
       parent_chain(segment.parent, collector) if segment.parent
     end
-
   end
 end

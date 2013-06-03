@@ -17,7 +17,7 @@ require 'dossier/segmenter'
 
 module Dummy
   class Application < ::Rails::Application
-    config.cache_classes = true
+    config.cache_classes = !Rails.env.development?
     config.active_support.deprecation = :stderr
     config.secret_token = 'http://s3-ec.buzzfed.com/static/enhanced/webdr03/2013/5/25/8/anigif_enhanced-buzz-11857-1369483324-0.gif'
   end

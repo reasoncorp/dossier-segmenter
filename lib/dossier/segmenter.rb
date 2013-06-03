@@ -49,19 +49,6 @@ module Dossier
     end
 
     def segment_options_for(segment)
-      # data.keys.reduce({}) do |acc, key| 
-      #   acc.tap do |hash|
-      #     k = key.split('.').first(segment.key_path.split('.').length + 1)
-      #     hash[k] ||= data[key].first
-      #   end
-      # end.values
-
-      # segmenter.data.keys.map{|k| k.split('.')}.inject({}) {|a,k| a[k.first(1)] ||= segmenter.data[k.join('.')].first; a}
-
-      # segmenter.data.keys.map{|k| k.split('.')}.inject({}) {|a,k| a[k.first(3)] ||= segmenter.data[k.join('.')].first; a}.select { |k,v| k.first(2) == ['feline', 'false'] }.values
-
-      # segment_position = 3
-
       position = segment.key_path.split('.').count
       data.keys.map { |key| 
         key.split('.') 
@@ -83,6 +70,10 @@ module Dossier
     def inspect
       "#<#{self.class.name}>"
     end
+    
+    def header_index_map
+      @header_index_map ||= Hash[skip_headers.map { |h| [h, report.results.headers.index(h)] }]
+    end
 
     private
 
@@ -95,10 +86,6 @@ module Dossier
       @segment_options
     end
 
-    def header_index_map
-      @header_index_map ||= Hash[skip_headers.map { |h| [h, report.results.headers.index(h)] }]
-    end
-
     def group_by_indexes
       @group_by_indexes ||= header_index_map.values_at(*segment_chain.map(&:group_by).map(&:to_s))
     end
@@ -109,4 +96,5 @@ require "dossier/segment"
 require "dossier/segment/chain"
 require "dossier/segment/definition"
 require "dossier/segment/rows"
+require "dossier/segment/summary"
 require "dossier/segmenter/report"

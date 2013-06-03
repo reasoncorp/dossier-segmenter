@@ -1,4 +1,4 @@
-= render_options(report)
+-# = render_options(report)
 
 .row-fluid
   .span12
@@ -10,51 +10,44 @@
           %table
             %thead
               %tr
-                %th{colspan: report.segmenter.headers.count}
+                %th{colspan: group.headers.count}
                   = group.display_name
               %tr
-                - report.segmenter.headers.each do |header|
+                - group.headers.each do |header|
                   %th= report.format_header(header)
             %tbody
               - group.rows.each do |row|
                 %tr
                   - row.each do |value|
                     %td= value
-            -# %tfoot
+            %tfoot
               %tr
-                %th Count #{segment.summary.count}
-                %th{colspan: 3}
-                %th= segment.summary.unbilled_currency
-                %th= segment.summary.receivable_currency
+                %th Count #{group.summary.count}
+                %th
+                %th= group.summary.average(:cuteness)
+                %th= group.summary.sum(:gifs)
+                %th
+      %table
+        %thead
+          %tr
+            %th Count
+            %th
+            %th Average
+            %th Sum
+            %th
+        %tbody
+          - family.domestics.each do |domestic|
+            %tr
+              %td= domestic.summary.count
+              %td
+              %td= domestic.summary.average(:cuteness)
+              %td= domestic.summary.sum(:gifs)
+              %td
+        %tfoot
+          %tr
+            %th= family.summary.count
+            %th
+            %th= family.summary.average(:cuteness)
+            %th= family.summary.sum(:gifs)
+            %th
 
-      -# .box{id: "#{division.name.downcase}-summary"}
-        .box-content.nopadding
-          %table.table
-            %thead
-              %tr
-                %th.text-left #{division.name} Summary
-                %th Records
-                %th Unbilled Summary
-                %th Receivable Summary
-              - division.states.each do |state|
-                %tbody
-                  - state.jurisdictions.each do |jurisdiction|
-                    - next if jurisdiction.summary.count.zero?
-                    %tr
-                      %td #{jurisdiction.name.titleize}, #{state.name}
-                      %td Count: #{jurisdiction.summary.count}
-                      %td.text-right= jurisdiction.summary.unbilled_currency
-                      %td.text-right= jurisdiction.summary.receivable_currency
-              %tfoot
-                - division.states.each do |state|
-                  - next if state.summary.count.zero?
-                  %tr
-                    %th #{state.full_name} State
-                    %th Count: #{state.summary.count}
-                    %th.text-right= state.summary.unbilled_currency
-                    %th.text-right= state.summary.receivable_currency
-                %tr
-                  %th= division.name
-                  %th Count: #{division.summary.count}
-                  %th.text-right= division.summary.unbilled_currency
-                  %th.text-right= division.summary.receivable_currency

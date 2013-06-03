@@ -24,6 +24,11 @@ describe Dossier::Segment do
     it "has access to the report" do
       expect(segment.report).to eq report
     end
+
+    it "delegates headers to its segmenter" do
+      segment.segmenter.should_receive(:headers)
+      segment.headers
+    end
   end
 
   describe "key paths" do
@@ -50,7 +55,7 @@ describe Dossier::Segment do
       end
 
       it "has the right amount of rows" do
-        expect(rows.count).to eq CuteAnimalsReport::ROWS.count
+        expect(rows.count).to eq CuteAnimalsReport::ROWS.call.count
       end
     end
 
