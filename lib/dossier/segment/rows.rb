@@ -13,7 +13,7 @@ module Dossier
       end
 
       def each
-        rows.each { |row| yield format(summarize(row)) }
+        rows.each { |row| yield summarize(format(row)) }
       end
 
       delegate :length, :count, :empty?, to: :rows

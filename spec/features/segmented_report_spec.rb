@@ -11,8 +11,7 @@ describe "segmented report" do
   end
 
   it "does not display options that are only used for grouping" do
-    expect(page).to_not have_content('15') # group_ids
-    expect(page).to_not have_content('22')
+    expect(page).to_not have_content('219') # group_ids
   end
 
   it "displays its options" do
@@ -20,7 +19,10 @@ describe "segmented report" do
     expect(page).to have_content('Some options plz!')
   end
 
-  it "has segments"
+  it "has summaries" do
+    expect(page).to have_content '$300,000.00'
+    expect(page).to have_content '3,570.0'
+  end
 
 end
 

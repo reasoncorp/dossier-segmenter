@@ -31,70 +31,89 @@ describe Dossier::Segment do
     end
   end
 
-  describe "key paths" do
-    let(:report)     { CuteAnimalsReport.new }
-    let!(:segmenter) { report.segmenter }
-    let(:families)   { segmenter.families }
-    let(:domestics)  { families.map(&:domestics).flatten }
-    let(:groups)     { domestics.map(&:groups).flatten }
-    let(:rows)       { groups.map(&:rows).map(&:to_a) }
-    let(:rows)       { groups.inject([]) { |a,g| a += g.rows.to_a } } 
 
-    describe "select the correct amount of segments" do
+  describe CuteAnimalsReport do
+    describe "key paths" do
+      let(:report)     { CuteAnimalsReport.new }
+      let!(:segmenter) { report.segmenter }
+      let(:families)   { segmenter.families }
+      let(:domestics)  { families.map(&:domestics).flatten }
+      let(:groups)     { domestics.map(&:groups).flatten }
+      let(:rows)       { groups.map(&:rows).map(&:to_a) }
+      let(:rows)       { groups.inject([]) { |a,g| a += g.rows.to_a } } 
 
-      it "has the right amount of families" do
-        expect(families.count).to eq 2
-      end
+      describe "select the correct amount of segments" do
 
-      it "has the right amount of domestics" do
-        expect(domestics.count).to eq 4
-      end
-
-      it "has the right amount of groups" do
-        expect(groups.count).to eq 6
-      end
-
-      it "has the right amount of rows" do
-        expect(rows.count).to eq CuteAnimalsReport::ROWS.call.count
-      end
-    end
-
-    describe "segment chains" do
-      let(:family_definition)    { segmenter.segment_chain[0] }
-      let(:domestic_definition)  { segmenter.segment_chain[1] }
-      let(:group_definition)     { segmenter.segment_chain[2] }
-      let(:family)   { described_class.new(segmenter, family_definition,   {family: 'feline'}) }
-      let(:domestic) { described_class.new(segmenter, domestic_definition, {domestic: true}  ).tap { |s| s.parent = family   } }
-      let(:group)    { described_class.new(segmenter, group_definition,    {group_id: 25}    ).tap { |s| s.parent = domestic } }
-
-      it "has all three elements in the chain from the bottom" do
-        expect(group.chain).to eq [group, domestic, family]
-      end
-
-      it "has two elements in the chain from the middle" do
-        expect(domestic.chain).to eq [domestic, family]
-      end
-
-      it "has one element in the chain from the top" do
-        expect(family.chain).to eq [family]
-      end
-
-      it "does not replicate elements in the chain when accessed again" do
-        family.chain
-        expect(family.chain.length).to eq 1
-      end
-
-      describe "key paths" do
-        it "works from the bottom" do
-          expect(group.key_path).to eq 'feline.true.25'
+        it "has the right amount of families" do
+          expect(families.count).to eq 2
         end
 
-        it "works from the middle" do
-          expect(domestic.key_path).to eq 'feline.true'
+        it "has the right amount of domestics" do
+          expect(domestics.count).to eq 4
         end
 
-        it "works from the top" do
-          expect(family.key_path).to eq 'feline'
+        it "has the right amount of groups" do
+          expect(groups.count).to eq 6
+        end
+
+        it "has the right amount of rows" do
+          expect(rows.count).to eq CuteAnimalsReport::ROWS.call.count
+        end
+      end
+
+      describe "summarizing" do
+        before(:each) { rows }
+
+        it "properly sums all rows under family" do
+          expect(families.first.summary.sum(:gifs).to_s).to eq '4154.0'
+        end
+
+        it "properly sums all rows under domestic" do
+          expect(domestics.first.summary.sum(:gifs).to_s).to eq '2755.0'
+        end
+
+        it "property sums all the rows under group" do
+          expect(groups.first.summary.sum(:gifs).to_s).to eq '1364.0'
+        end
+
+        describe "segment chains" do
+          let(:family_definition)    { segmenter.segment_chain[0] }
+          let(:domestic_definition)  { segmenter.segment_chain[1] }
+          let(:group_definition)     { segmenter.segment_chain[2] }
+          let(:family)   { described_class.new(segmenter, family_definition,   {family: 'feline'}) }
+          let(:domestic) { described_class.new(segmenter, domestic_definition, {domestic: true}  ).tap { |s| s.parent = family   } }
+          let(:group)    { described_class.new(segmenter, group_definition,    {group_id: 25}    ).tap { |s| s.parent = domestic } }
+
+          it "has all three elements in the chain from the bottom" do
+            expect(group.chain).to eq [group, domestic, family]
+          end
+
+          it "has two elements in the chain from the middle" do
+            expect(domestic.chain).to eq [domestic, family]
+          end
+
+          it "has one element in the chain from the top" do
+            expect(family.chain).to eq [family]
+          end
+
+          it "does not replicate elements in the chain when accessed again" do
+            family.chain
+            expect(family.chain.length).to eq 1
+          end
+
+          describe "key paths" do
+            it "works from the bottom" do
+              expect(group.key_path).to eq 'feline.true.25'
+            end
+
+            it "works from the middle" do
+              expect(domestic.key_path).to eq 'feline.true'
+            end
+
+            it "works from the top" do
+              expect(family.key_path).to eq 'feline'
+            end
+          end
         end
       end
     end

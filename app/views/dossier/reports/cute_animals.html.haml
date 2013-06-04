@@ -1,3 +1,5 @@
+-# TODO this should be working but ApplicationHelper 
+-# doesn't get included into the view context either...
 -# = render_options(report)
 
 .row-fluid
@@ -22,11 +24,12 @@
                     %td= value
             %tfoot
               %tr
-                %th Count #{group.summary.count}
+                %th Count #{commafy_number group.summary.count}
                 %th
-                %th= group.summary.average(:cuteness)
-                %th= group.summary.sum(:gifs)
+                %th= commafy_number group.summary.average(:cuteness), 2
+                %th= commafy_number group.summary.sum(:gifs)
                 %th
+                %th= number_to_dollars group.summary.average(:cost_new)
       %table
         %thead
           %tr
@@ -38,16 +41,17 @@
         %tbody
           - family.domestics.each do |domestic|
             %tr
-              %td= domestic.summary.count
+              %td= commafy_number domestic.summary.count
               %td
-              %td= domestic.summary.average(:cuteness)
-              %td= domestic.summary.sum(:gifs)
+              %td= commafy_number domestic.summary.average(:cuteness), 2
+              %td= commafy_number domestic.summary.sum(:gifs)
               %td
+              %td= number_to_dollars domestic.summary.average(:cost_new)
         %tfoot
           %tr
-            %th= family.summary.count
+            %th= commafy_number family.summary.count
             %th
-            %th= family.summary.average(:cuteness)
-            %th= family.summary.sum(:gifs)
+            %th= commafy_number family.summary.average(:cuteness), 2
+            %th= commafy_number family.summary.sum(:gifs)
             %th
-
+            %th= number_to_dollars family.summary.average(:cost_new)

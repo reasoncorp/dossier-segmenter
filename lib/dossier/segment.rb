@@ -35,7 +35,7 @@ module Dossier
     end
 
     def summarize(row)
-      summary << row
+      row.tap { summary << row }
     end
 
     def summary

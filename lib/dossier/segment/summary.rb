@@ -12,7 +12,7 @@ module Dossier
 
       def <<(row)
         @count += 1
-        row.each_with_index { |v, i| sums[i] += BigDecimal.new(v.to_s) }
+        row.each_with_index { |v, i| sums[i] += parse(v) }
         self
       end
 
@@ -32,6 +32,10 @@ module Dossier
         key = key.to_s
         @indexes ||= {}
         @indexes[key] ||= headers.index(key)
+      end
+
+      def parse(value)
+        BigDecimal.new(value.to_s.gsub(/\$|,|\s/, ''))
       end
     end
   end
