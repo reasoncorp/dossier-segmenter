@@ -57,7 +57,7 @@ module Dossier
       end
 
       def display_name_for_column
-        display_name.respond_to?(:call) ? name : display_name
+        display_name.respond_to?(:call) ? group_by : display_name
       end
 
       def rows_module

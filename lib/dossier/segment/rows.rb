@@ -28,7 +28,7 @@ module Dossier
       end
 
       def truncate(row)
-        row.tap { |r| segmenter.header_index_map.values.sort.each_with_index { |i, j| r.delete_at(i - j) } }
+        row.dup.tap { |r| segmenter.header_index_map.values.sort.each_with_index { |i, j| r.delete_at(i - j) } }
       end
 
       def summarize(row)

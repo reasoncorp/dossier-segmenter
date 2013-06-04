@@ -64,6 +64,11 @@ describe Dossier::Segment::Definition do
         definition = described_class.new(segmenter_class, :foo, group_by: :bar, display_name: :baz)
         expect(definition.columns).to eq %w[bar baz]
       end
+
+      it "knows not to use the display_name if group_by is present and display_name is a proc" do
+        definition = described_class.new(segmenter_class, :foo, group_by: :foo_id, display_name: ->(row) {})
+        expect(definition.columns).to eq %w[foo_id]
+      end
     end
   end
 
