@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Dossier::Segmenter::VERSION
   spec.authors       = ["Adam Hunter"]
   spec.email         = ["adamhunter@me.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q[Adds control breaks to dossier reports by defined segments based on query results.]
+  spec.summary       = %q[Extends Dossier to have segmented report functionality.]
   spec.homepage      = "https://github.com/adamhunter/dossier-segmenter"
   spec.license       = "MIT"
 

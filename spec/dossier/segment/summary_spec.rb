@@ -42,4 +42,10 @@ describe Dossier::Segment::Summary do
     end
   end
 
+  describe "operating on a header that doesn't exist" do
+    it "raises an helpful error" do
+      expect { summary.sum :fluffikins }.to raise_error(Dossier::Segment::Summary::HeaderError, /no such header 'fluffikins'/i)
+    end
+  end
+
 end

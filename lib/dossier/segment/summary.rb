@@ -29,14 +29,22 @@ module Dossier
       attr_reader :headers, :sums
 
       def index_of(key)
-        key = key.to_s
+        indexes[key.to_s] ||= headers.index(key.to_s) or raise_missing_header(key)
+      end
+
+      def indexes
         @indexes ||= {}
-        @indexes[key] ||= headers.index(key)
       end
 
       def parse(value)
-        BigDecimal.new(value.to_s.gsub(/\$|,|\s/, ''))
+        BigDecimal.new(value.to_s)
       end
+
+      def raise_missing_header(key)
+        raise HeaderError.new %Q[No such header '#{key}' in headers: #{headers.join(', ')}]
+      end
+
+      HeaderError = Class.new(StandardError)
     end
   end
 end

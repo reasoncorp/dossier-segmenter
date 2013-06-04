@@ -16,7 +16,7 @@ describe Dossier::Segmenter do
   let(:headers)   { CuteAnimalsReport::HEADERS.call }
   let(:rows)      { CuteAnimalsReport::ROWS.call    }
   let(:results)   { mock('Results', headers: headers, rows: rows) }
-  let(:report)    { report_class.new.tap { |r| r.stub(:results).and_return(results) } }
+  let(:report)    { report_class.new.tap { |r| r.stub(:raw_results).and_return(results) } }
   let(:segmenter) { report.segmenter }
 
   describe "report data" do

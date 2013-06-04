@@ -1,8 +1,6 @@
 module Dossier
   class Segment
-    class Rows
-      include Enumerable
-
+    class Rows < Dossier::Result::Formatted
       attr_accessor :segmenter, :segment, :report, :definition
 
       def initialize(segmenter, segment, definition)
@@ -12,11 +10,12 @@ module Dossier
         self.definition = definition
       end
 
-      def each
-        rows.each { |row| yield summarize(format(row)) }
-      end
-
+      delegate :headers, to: :segmenter
       delegate :length, :count, :empty?, to: :rows
+
+      def each
+        segmenter_data.each { |row| yield format(summarize(truncate(row))) }
+      end
 
       def inspect
         "#<#{self.class.name}:@rows.count=#{rows.count}>"
@@ -24,11 +23,11 @@ module Dossier
 
       private
 
-      def rows
-        @rows ||= segmenter.data.fetch(segment.key_path)
+      def segmenter_data
+        @segmenter_data ||= segmenter.data.fetch(segment.key_path)
       end
 
-      def format(row)
+      def truncate(row)
         row.tap { |r| segmenter.header_index_map.values.sort.each_with_index { |i, j| r.delete_at(i - j) } }
       end
 

@@ -31,11 +31,11 @@ module Dossier
     end
 
     def headers
-      @headers ||= report.results.headers.reject { |header| header.in?(skip_headers) }
+      @headers ||= report_results.headers.reject { |header| header.in?(skip_headers) }
     end
 
     def data
-      @data ||= report.results.rows.inject(Hash.new { [] }) { |acc, row|
+      @data ||= report_results.rows.inject(Hash.new { [] }) { |acc, row|
         acc.tap { |hash| hash[key_path_for(row)] += [row] }
       }
     end
@@ -59,7 +59,7 @@ module Dossier
       }.select { |key, value| 
         key.first(position) == segment.key_path.split('.')
       }.values.map { |row|
-        Hash[report.results.headers.zip(row)]
+        Hash[report_results.headers.zip(row)]
       }
     end
 
@@ -72,10 +72,14 @@ module Dossier
     end
     
     def header_index_map
-      @header_index_map ||= Hash[skip_headers.map { |h| [h, report.results.headers.index(h)] }]
+      @header_index_map ||= Hash[skip_headers.map { |h| [h, report_results.headers.index(h)] }]
     end
 
     private
+
+    def report_results
+      report.raw_results
+    end
 
     def key_path_for(row)
       group_by_indexes.map { |i| row.at(i) }.join('.')
