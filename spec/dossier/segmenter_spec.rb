@@ -4,14 +4,12 @@ describe Dossier::Segmenter do
 
   let(:report_class)    { Class.new(Dossier::Report) }
   let!(:segmenter_class) {
-    report_class.segmenter_class.tap do |klass|
-      klass.instance_eval do
+    report_class.const_set(:Segmenter, Class.new(described_class) {
         segment :family
         segment :domestic, display_name: ->(row) { "#{row[:domestic] ? 'Domestic' : 'Wild'} #{row[:group_name]}" } do
           segment :group,  display_name: :group_name, group_by: :group_id
         end
-      end
-    end
+    })
   }
   let(:headers)   { CuteAnimalsReport::HEADERS.call }
   let(:rows)      { CuteAnimalsReport::ROWS.call    }
@@ -69,10 +67,6 @@ describe Dossier::Segmenter do
   end
 
   describe "class" do
-    it "has a reference to the report that created it" do
-      expect(segmenter_class.report_class).to eq report_class
-    end
-
     it "determines headers to skip when displaying" do
       expect(segmenter_class.skip_headers.sort).to eq %w[family group_name group_id domestic].sort
     end
@@ -81,7 +75,7 @@ describe Dossier::Segmenter do
   describe "DSL" do
     describe "segment" do
       describe "definition creation" do
-        let(:segmenter_class) { report_class.segmenter_class }
+        let(:segmenter_class) { report_class.const_set(:Segmenter, Class.new(described_class)) }
         let(:definition)      { segmenter_class.segments.last }
 
         it "creates a segment definition" do

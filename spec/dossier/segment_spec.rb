@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Dossier::Segment do
   let(:report_class)     { Class.new(Dossier::Report) }
   let!(:segmenter_class) { 
-    report_class.segmenter_class.tap { |sc|
+    report_class.const_set(:Segmenter, Class.new(Dossier::Segmenter) { |sc|
       sc.segment :foo
-    }
+    })
   }
   let(:definition)      { segmenter_class.segments.first }
   let(:report)          { report_class.new }

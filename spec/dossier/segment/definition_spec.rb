@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Dossier::Segment::Definition do
   let(:report_class)    { Class.new(Dossier::Report) }
-  let(:segmenter_class) { report_class.segmenter_class }
+  let(:segmenter_class) { report_class.const_set(:Segmenter, Class.new(Dossier::Segmenter)) }
   let(:definition)      { described_class.new(segmenter_class, :foo) }
 
   describe "attributes" do
@@ -78,7 +78,7 @@ describe Dossier::Segment::Definition do
     end
 
     it "sets up the segment subclasses name constant properly" do
-      expect(CuteAnimalsReport::Family).to be_a Class
+      expect(CuteAnimalsReport::Segmenter::Family).to be_a Class
     end
   end
 end

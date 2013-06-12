@@ -32,7 +32,7 @@ class CuteAnimalsReport < Dossier::Report
     formatter.number_to_dollars(value)
   end
 
-  class Segmenter
+  class Segmenter < Dossier::Segmenter
     segment :family
     segment :domestic, display_name: ->(row) { "#{row[:domestic] ? 'Domestic' : 'Wild'} #{row[:group_name]}" }
     segment :group,    display_name: :group_name, group_by: :group_id

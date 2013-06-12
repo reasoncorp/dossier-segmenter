@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Dossier::Segment::Chain do
   let(:report_class)    { Class.new(Dossier::Report) }
-  let(:segmenter_class) { report_class.segmenter_class }
+  let(:segmenter_class) { report_class.const_set(:Segmenter, Class.new(Dossier::Segmenter)) }
   let(:definition)      { Dossier::Segment::Definition.new(segmenter_class, :foo) }
   let(:next)            { Dossier::Segment::Definition.new(segmenter_class, :bar) }
   let(:chain)           { described_class.new.tap { |c| c << definition } }

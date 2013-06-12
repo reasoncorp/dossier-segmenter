@@ -1,12 +1,11 @@
 module Dossier
   class Segment
     class Definition
-      attr_accessor :segmenter_class, :report_class, :name, :group_by, :display_name, :next, :prev
+      attr_accessor :segmenter_class, :name, :group_by, :display_name, :next, :prev
       attr_reader :segment_subclass
 
       def initialize(segmenter_class, name, options = {})
         self.segmenter_class = segmenter_class
-        self.report_class    = segmenter_class.report_class
         self.name            = name
         self.group_by        = options.fetch(:group_by, name)
         self.display_name    = options.fetch(:display_name, name)
@@ -53,7 +52,7 @@ module Dossier
       private
 
       def define_segment_subclass
-        @segment_subclass = report_class.const_set(segment_class_name, Class.new(Dossier::Segment))
+        @segment_subclass = segmenter_class.const_set(segment_class_name, Class.new(Dossier::Segment))
       end
 
       def display_name_for_column
