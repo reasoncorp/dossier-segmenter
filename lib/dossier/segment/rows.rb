@@ -10,8 +10,11 @@ module Dossier
         self.definition = definition
       end
 
-      delegate :headers, to: :segmenter
       delegate :length, :count, :empty?, to: :rows
+
+      def raw_headers
+        segmenter.headers
+      end
 
       def each
         segmenter_data.each { |row| yield format(summarize(truncate(row))) }
