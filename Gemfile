@@ -4,4 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 # gem 'dossier', git: 'git@github.com:adamhunter/dossier'
-gem 'dossier', path: '/usr/local/gems/dossier'
+# gem 'dossier', path: '/usr/local/gems/dossier'
