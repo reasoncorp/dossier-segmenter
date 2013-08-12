@@ -162,4 +162,16 @@ describe Dossier::Segmenter do
       end
     end
   end
+
+
+  describe "summarizing" do
+    before(:each) { 
+      # run through all of the rows, triggering each, which calls summarize
+      segmenter.families.map(&:domestics).flatten.map(&:groups).flatten.map(&:rows).flatten.map(&:to_a)
+    }
+
+    it "properly sums all rows for the entire report" do
+      expect(segmenter.summary.sum(:gifs).to_s).to eq '9006.0'
+    end
+  end
 end

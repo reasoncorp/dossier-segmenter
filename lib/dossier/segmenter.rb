@@ -2,8 +2,12 @@ require 'dossier'
 require 'dossier/segmenter/engine'
 require 'dossier/segmenter/version'
 
+require "dossier/segmenter/summable"
+
 module Dossier
   class Segmenter
+    include Summable
+
     attr_accessor :report
 
     class << self

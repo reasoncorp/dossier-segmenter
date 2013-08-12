@@ -35,7 +35,7 @@ module Dossier
       end
 
       def summarize(row)
-        row.tap { |r| segment.chain.each { |s| s.summarize row } }
+        row.tap { |r| [segmenter, segment.chain].flatten.each { |s| s.summarize row } }
       end
     end
   end
