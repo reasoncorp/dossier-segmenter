@@ -1,7 +1,4 @@
-ENV['RAILS_ENV'] = 'test'
-
-require File.expand_path('../dummy/config/application', __FILE__)
-
+require 'dummy/application'
 require 'simplecov'
 SimpleCov.start
 
