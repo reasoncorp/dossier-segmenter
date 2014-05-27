@@ -39,7 +39,6 @@ describe Dossier::Segment do
       let(:families)   { segmenter.families }
       let(:domestics)  { families.map(&:domestics).flatten }
       let(:groups)     { domestics.map(&:groups).flatten }
-      let(:rows)       { groups.map(&:rows).map(&:to_a) }
       let(:rows)       { groups.inject([]) { |a,g| a += g.rows.to_a } } 
 
       describe "select the correct amount of segments" do

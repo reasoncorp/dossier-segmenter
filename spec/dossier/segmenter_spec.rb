@@ -13,7 +13,7 @@ describe Dossier::Segmenter do
   }
   let(:headers)   { CuteAnimalsReport::HEADERS.call }
   let(:rows)      { CuteAnimalsReport::ROWS.call    }
-  let(:results)   { mock('Results', headers: headers, rows: rows) }
+  let(:results)   { double('Results', headers: headers, rows: rows) }
   let(:report)    { report_class.new.tap { |r| r.stub(:raw_results).and_return(results) } }
   let(:segmenter) { report.segmenter }
 
@@ -116,7 +116,7 @@ describe Dossier::Segmenter do
 
   describe "segment options" do
     it 'works the way I want it to' do
-      segment = mock('Segment', key_path: 'feline.false')
+      segment = double('Segment', key_path: 'feline.false')
       options = segmenter.segment_options_for segment
       expect(options.map { |hash| hash['group_id'] }).to eq [22, 23]
     end
@@ -160,6 +160,18 @@ describe Dossier::Segmenter do
           end
         end
       end
+    end
+  end
+
+
+  describe "summarizing" do
+    before(:each) { 
+      # run through all of the rows, triggering each, which calls summarize
+      segmenter.families.map(&:domestics).flatten.map(&:groups).flatten.map(&:rows).flatten.map(&:to_a)
+    }
+
+    it "properly sums all rows for the entire report" do
+      expect(segmenter.summary.sum(:gifs).to_s).to eq '9006.0'
     end
   end
 end

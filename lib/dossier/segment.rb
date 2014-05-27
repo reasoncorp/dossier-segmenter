@@ -1,5 +1,7 @@
 module Dossier
   class Segment
+    include Segmenter::Summable
+
     attr_accessor :segmenter, :report, :definition, :parent, :options
 
     def initialize(segmenter, definition, options = {})
@@ -32,14 +34,6 @@ module Dossier
 
     def inspect
       "#<#{self.class.name}:#{key_path}>"
-    end
-
-    def summarize(row)
-      row.tap { summary << row }
-    end
-
-    def summary
-      @summary ||= Summary.new(headers)
     end
 
     delegate :headers, to: :segmenter
